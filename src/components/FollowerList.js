@@ -6,19 +6,34 @@ import Follower from "./Follower";
 class FollowerList extends React.Component {
     state = {
         followers: [],
+        user: ""
     }
 
     componentDidMount(){
-        const user = this.props.githubUser
+        this.setState({
+            ...this.state,
+            user: this.props.githubUserData
+        })
+
         axios.get(`https://api.github.com/users/${this.props.githubUser}/followers`)
             .then(resp => {
-                console.log("RESPONSE: ", resp.data);
-                console.log(`URL: https://api.github.com/users/${user}/followers`);
                 this.setState({
                     ...this.state,
                     followers: resp.data
                 })
             })
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(prevProps !== prevState.user) {
+            axios.get(`https://api.github.com/users/${this.props.githubUserData.login}/followers`)
+            .then(resp => {
+                this.setState({
+                    ...this.state,
+                    followers: resp.data
+                })
+            })
+        }
     }
 
     render() {

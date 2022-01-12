@@ -21,6 +21,19 @@ code {
   justify-content: center;
 }
 
+.search-form input{
+  width: 80%;
+  height: auto;
+  outline: none;
+  margin-right: 5px;
+  padding: 8px;
+  font-size: 16px;
+}
+
+.search-form button{
+  cursor: pointer;
+}
+
 /* User.js */
 .user-container{
   width: 600px;
@@ -31,10 +44,11 @@ code {
 
 .user-pic img{
   height: 250px;
+  border-radius: 10px;
 }
 
 .user-info{
-  margin: 20px;
+  margin: 0 20px;
 }
 
 .user-info h2{

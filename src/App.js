@@ -11,15 +11,15 @@ class App extends React.Component {
     githubUserData: [],
     githubUser: ""
   }
-  componentDidMount() {
-    axios.get(`https://api.github.com/users/dbvker`)
-      .then(resp => {
-        this.setState({
-          ...this.state,
-          githubUserData: resp.data
-        });
-      })
-  }
+  // componentDidMount() {
+  //   axios.get(`https://api.github.com/users/dbvker`)
+  //     .then(resp => {
+  //       this.setState({
+  //         ...this.state,
+  //         githubUserData: resp.data,
+  //       });
+  //     })
+  // }
 
   handleSearchTerm = (e) => {
     this.setState({
@@ -48,8 +48,14 @@ class App extends React.Component {
         <input onChange={this.handleSearchTerm} type='text' placeholder='GitHub Handle'/>
         <button>Search</button>
       </form>
-      <User githubUserData={this.state.githubUserData} />
-      <FollowerList githubUser={this.state.githubUser} />
+      {(this.state.githubUserData.length < 0) ?
+        <>
+          <User githubUserData={this.state.githubUserData} />
+          <FollowerList githubUserData={this.state.githubUserData} />
+        </>
+        : <h1>Search for a user!</h1>
+      }
+      
     </div>);
   }
 }
