@@ -1,10 +1,24 @@
 import React from "react";
+import axios from "axios";
 
 import Follower from "./Follower";
 
 class FollowerList extends React.Component {
     state = {
-        followers: ["Dylan", "Alex", "Dylan", "Alex", "Dylan", "Alex", "Dylan", "Alex", "Dylan", "Alex"]
+        followers: [],
+    }
+
+    componentDidMount(){
+        const user = this.props.githubUser
+        axios.get(`https://api.github.com/users/${this.props.githubUser}/followers`)
+            .then(resp => {
+                console.log("RESPONSE: ", resp.data);
+                console.log(`URL: https://api.github.com/users/${user}/followers`);
+                this.setState({
+                    ...this.state,
+                    followers: resp.data
+                })
+            })
     }
 
     render() {

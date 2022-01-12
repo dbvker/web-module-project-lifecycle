@@ -30,21 +30,26 @@ class App extends React.Component {
 
   handleSearchSubmit = (e) => {
     e.preventDefault();
-    console.log("searched")
-
     const user = this.state.githubUser;
 
+    axios.get(`https://api.github.com/users/${user}`)
+      .then(resp => {
+        this.setState({
+          ...this.state,
+          githubUserData: resp.data
+        })
+      })
   }
 
   render() {
     return(<div>
-      <h1>GITHUB INFO</h1>
-      <form onSubmit={this.handleSearchSubmit}>
+      <h1><center>GITHUB INFO</center></h1>
+      <form onSubmit={this.handleSearchSubmit} className="search-form">
         <input onChange={this.handleSearchTerm} type='text' placeholder='GitHub Handle'/>
         <button>Search</button>
       </form>
       <User githubUserData={this.state.githubUserData} />
-      <FollowerList />
+      <FollowerList githubUser={this.state.githubUser} />
     </div>);
   }
 }
